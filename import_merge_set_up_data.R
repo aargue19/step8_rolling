@@ -6,7 +6,7 @@ library(beepr)
 library(dplyr)
 
 rm(list=ls())
-setwd("C:/Users/gaoan/Desktop/step8_narrow")
+setwd("C:/Users/gaoan/Desktop/step8_rolling")
 info = read.csv("games_basic_info.csv")
 scores = read.csv("gen7_metacritic_scores_all_platforms.csv")
 words = read.csv("step7_20210705.csv")
@@ -22,11 +22,15 @@ full_df = full_df[full_df$std_word != "JUST_NAME",]
 full_df = full_df[full_df$duplicate != 1,] 
 full_df = full_df[full_df$duplicate != 999999,] 
 
-
 full_df$release_year[full_df$release_year == "2015" |             
                      full_df$release_year == "2016"] = "2014"                   #COMBINE 2014, 2015, AND 2016
 full_df$std_word[full_df$std_word == "2D"] = "x2d"                              #RENAME THESE BECAUSE IT MESSES UP SOMETHING LATER
 full_df$std_word[full_df$std_word == "3D"] = "x3d"
+
+full_df$release_date = paste(as.character(full_df$release_year), as.character(full_df$release_month), as.character(full_df$release_day), sep="-")
+full_df$release_date = full_df$release_date
+
+
 
 ################################################################################
 # CREATE DUMMY COLUMNS TO INDICATE WHICH SUBSETS OBS. BELONG TO 
@@ -95,8 +99,6 @@ sub_df$pct_99p = 0
 sub_df$pct_95p[sub_df$std_word %in% top95_words] = 1
 sub_df$pct_99p[sub_df$std_word %in% top99_words] = 1
 
-
-
 ################################################################################
 # CREATE TWO NEW COLUMNS FOR METACRITIC SCORE THRESHOLDS
 
@@ -162,4 +164,4 @@ df$wordtype_wm[df$remark == "world" | df$remark == "event"] = 1
 df$wordtype_world[df$remark == "world" | df$remark == "avatar" | df$remark == "name" | df$remark == "perspective"] = 1
 df$wordtype_mech[df$remark == "event"] = 1
 
-write.csv(df, "merged_data_w_dummies.csv")
+write.csv(df, "merged_data_w_dummies.csv", row.names = F, sep = "|")

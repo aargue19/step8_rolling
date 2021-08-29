@@ -6,6 +6,7 @@ setwd("C:/Users/gaoan/Desktop/step8_narrow/matrices")
 
 library(dplyr)
 library(lsa)
+library(quanteda)
 
 '%!in%' <- Negate('%in%')
 
