@@ -7,6 +7,7 @@ setwd("C:/Users/gaoan/Desktop/step8_rolling/matrices")
 library(dplyr)
 library(lsa)
 library(quanteda)
+library(lubridate)
 
 '%!in%' <- Negate('%in%')
 
@@ -28,7 +29,6 @@ wide_genre_options = unique(df$genre_wide)
 # word_freq_options = c("pct_95p")
 # avg_score_options = c("mc_allscore","mc_75score")
 # wide_genre_options = c("sports","strategy")
-
 ####################################
 
 # final_df = data.frame(game_id = unique(df$id))
@@ -58,6 +58,10 @@ for(type in word_type_options){
   
             test_df = current_group_games[current_group_games$id == check_id,]
             current_game_date = as.Date(unique(test_df$release_date))
+            current_game_month = month(current_game_date)
+            
+            
+            
             
             # create a dtf matrix for current game
             temp = test_df[,c("id","std_word")]
@@ -84,14 +88,13 @@ for(type in word_type_options){
             
             # games released btw current game release and one year ago
             
-            cs = current_group_games[current_group_games$release_date > current_game_date-365 &
-                                       current_group_games$release_date < current_game_date,]
+            cs = current_group_games[interval(current_game_date, as.Date(current_group_games$release_date)) %/% months(1) > 0 &
+            interval(current_game_date, as.Date(current_group_games$release_date)) %/% months(1) < 13,]
             
             if(nrow(cs)>0){
               
               # create a dtf matrix for one year prototype
               
-                                                     
               temp = cs[,c("id","std_word")]
               strings_df = data.frame()
               
@@ -153,10 +156,10 @@ for(type in word_type_options){
             ######################################################################
             # DO IT ALL AGAIN BUT FOR 2 YEAR WINDOW
             
-            # games released btw current game release and one year ago
+            # games released btw current game release and 24 months ago
             
-            cs = current_group_games[current_group_games$release_date > current_game_date-730 &
-                                       current_group_games$release_date < current_game_date,]
+            cs = current_group_games[interval(current_game_date, as.Date(current_group_games$release_date)) %/% months(1) > 0 &
+                                       interval(current_game_date, as.Date(current_group_games$release_date)) %/% months(1) < 25,]
             
             if(nrow(cs)>0){
               

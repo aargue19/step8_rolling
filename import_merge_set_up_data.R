@@ -22,8 +22,8 @@ full_df = full_df[full_df$std_word != "JUST_NAME",]
 full_df = full_df[full_df$duplicate != 1,] 
 full_df = full_df[full_df$duplicate != 999999,] 
 
-full_df$release_year[full_df$release_year == "2015" |             
-                     full_df$release_year == "2016"] = "2014"                   #COMBINE 2014, 2015, AND 2016
+# full_df$release_year[full_df$release_year == "2015" |             
+#                      full_df$release_year == "2016"] = "2014"                   # DONT COMBINE 2014, 2015, AND 2016 FOR ROLLING WINDOWS
 full_df$std_word[full_df$std_word == "2D"] = "x2d"                              #RENAME THESE BECAUSE IT MESSES UP SOMETHING LATER
 full_df$std_word[full_df$std_word == "3D"] = "x3d"
 
