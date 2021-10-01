@@ -11,10 +11,15 @@ library(lubridate)
 
 '%!in%' <- Negate('%in%')
 
+# word_type_options = c("wordtype_all", "wordtype_wm", "wordtype_world",
+#                       "wordtype_mech")
+# word_freq_options = c("pct_full")
+# avg_score_options = c("mc_allscore")
+
 word_type_options = c("wordtype_all", "wordtype_wm", "wordtype_world",
                       "wordtype_mech")
-word_freq_options = c("pct_full")
-avg_score_options = c("mc_allscore")
+word_freq_options = c("pct_99p", "pct_95p")
+avg_score_options = c("mc_90score", "mc_75score")
 
 # 
 # word_type_options = c("wordtype_all", "wordtype_wm", "wordtype_world",
@@ -93,48 +98,7 @@ for(type in word_type_options){
             mat1 = as.matrix(dtm)
             
             # games released btw current game release and one year ago
-            
-            ##################################################################
-            #TESTING PURPOSES ONLY
-            # test_df = current_group_games[current_group_games$release_year > 2010,]
-            # 
-            # test_current_game_date = as.Date("2014-12-25")
-            # 
-            # test_df  = test_df[,c("id","release_date")]
-            # 
-            # test_df  = unique(test_df)
-            # 
-            # test_df = rbind(test_df, data.frame(id = 999997, release_date = "2013-11-30"))
-            # test_df = rbind(test_df, data.frame(id = 999997, release_date = "2013-12-1"))
-            # 
-            # test_df = rbind(test_df, data.frame(id = 999990, release_date = "2014-11-24"))
-            # test_df = rbind(test_df, data.frame(id = 999991, release_date = "2014-11-25"))
-            # test_df = rbind(test_df, data.frame(id = 999992, release_date = "2014-11-26"))
-            # test_df = rbind(test_df, data.frame(id = 999993, release_date = "2014-11-27"))
-            # test_df = rbind(test_df, data.frame(id = 999994, release_date = "2014-11-28"))
-            # test_df = rbind(test_df, data.frame(id = 999995, release_date = "2014-11-29"))
-            # test_df = rbind(test_df, data.frame(id = 999996, release_date = "2014-11-30"))
-            # test_df = rbind(test_df, data.frame(id = 999997, release_date = "2014-12-1"))
-            # 
-            # 
-            # as.Date(test_df$release_date)
-            # 
-            # rollback(as.Date(test_df$release_date))
-            # 
-            # interval(test_current_game_date, rollback(as.Date(test_df$release_date)))
-            # 
-            # interval(rollback(test_current_game_date), rollback(as.Date(test_df$release_date))) %/% months(1)
-            # 
-            # test_df[interval(rollforward(test_current_game_date), rollback(as.Date(test_df$release_date))) %/% months(1) < -1 &
-            #         interval(rollforward(test_current_game_date), rollback(as.Date(test_df$release_date))) %/% months(1) > -14,]
-            # 
-            # interval(rollforward(test_current_game_date), rollbackward(as.Date(test_df$release_date, roll_to_first = TRUE))) %/% months(1) ##### THIS!!
 
-            ##################################################################
-            
-            # cs = current_group_games[interval(rollback(current_game_date), rollback(as.Date(current_group_games$release_date))) %/% months(1) > 0 &
-            # interval(rollback(current_game_date), rollback(as.Date(current_group_games$release_date))) %/% months(1) < 13,]
-            
             cs = current_group_games[interval(rollforward(current_game_date), rollback(as.Date(current_group_games$release_date))) %/% months(1) < -1 &
                       interval(rollforward(current_game_date), rollback(as.Date(current_group_games$release_date))) %/% months(1) > -14,]
             
