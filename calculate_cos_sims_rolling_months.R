@@ -16,8 +16,7 @@ library(lubridate)
 # word_freq_options = c("pct_full")
 # avg_score_options = c("mc_allscore")
 
-word_type_options = c("wordtype_all", "wordtype_wm", "wordtype_world",
-                      "wordtype_mech")
+word_type_options = c("wordtype_world","wordtype_mech")
 word_freq_options = c("pct_99p", "pct_95p")
 avg_score_options = c("mc_90score", "mc_75score")
 
